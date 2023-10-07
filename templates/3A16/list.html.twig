@@ -3,12 +3,17 @@
 {% for author in a %}
 
 {% set nbBooks=nbBooks+ author.nb_books%}
-{#{% if (author.nb_books>0)%}
+{#
+ {% if (author.nb_books>0)%}
 {{author.username}}
-{%endif%}#}
+{%endif%}
+#}
+
+
 <img src="{{asset(author.picture)}}">
 {{author.username}}
 <a  href="{{path('Bonj',{'name':author.username})}}">detail</a>
 {% endfor %}
-{{nbBooks}}
+{{  nbBooks}}
+
 nb authors{{a|length}}
