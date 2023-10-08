@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
 class Author
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(name:'reference')]
+    #[ORM\Id]  // ORM\ID=>c'est la clé primaire (on ne peut pas changer le nom ici)
+    #[ORM\GeneratedValue] //auto increment
+    #[ORM\Column(name:'reference')] 
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -26,7 +26,7 @@ class Author
     {
         return $this->id;
     }
-
+//id n'a pas set() car elle est auto increment
     public function getEmail(): ?string
     {
         return $this->email;

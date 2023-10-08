@@ -9,16 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class AuthorController extends AbstractController
 {
-    #[Route('/author', name: 'app_author')]
+    #[Route('/author', name: 'app_author_index')]
     public function index(): Response
     {
         return $this->render('author/index.html.twig', [
             'controller_name' => 'AuthorController',
         ]);
     }
-    #[Route('/au/{k}', name: 'app_author')]
+    #[Route('/au/{k}', name: 'app_author_show')]
     public function showAuthor($k): Response
     {
         return $this->render('author/msg.html.twig', [
@@ -51,26 +52,26 @@ class AuthorController extends AbstractController
     public function fetchAuthors(ManagerRegistry $mr){
 $repo=$mr->getRepository(Author::class);
 $result=$repo->findAll();
-dd($result);
+dd($result); //dump and die
     }
-
+//authorRepository=esm lclass 
     #[Route('/fetchtwo', name: 'fetchtwo')]
     public function fetchtwoAuthors(AuthorRepository $repo){
 $result=$repo->findAll();
-return $this->render('author/authors.html.twig',[
-    'auth'=>$result
-]);
+return $this->render('author/authors.html.twig',['auth'=>$result ]);
     }
+
+    //ajout static:
     #[Route('/add', name: 'add')]
     public function addAuthor(ManagerRegistry $mr){
-$autho=new Author();
+$autho=new Author(); //instanciation
 $autho->setUsername('med');
 $autho->setEmail('test@gmail.com');
 $autho->setAge(34);
-$em=$mr->getManager();
-$em->persist($autho);
-$em->flush();
-return $this->redirectToRoute('fetchtwo');
+$em=$mr->getManager(); //getmanager car insertion. si on veut faire recuperation 'getrepositry'
+$em->persist($autho); //persist:methode prepare->bch yzid lel bd 
+$em->flush(); //execution
+return $this->redirectToRoute('fetchtwo'); 
     }
 
 }
